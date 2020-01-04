@@ -99,11 +99,18 @@ class QuestSync(commands.Cog):
                             quests[quest_id].update(to_add)
 
         log.info('To sync:')
-        log.info(json.dumps(quests, sort_keys=True, indent=4))
+        log.info(json.dumps(quests, sort_keys=True, indent=4, default=_convert_to_serializable))
 
         unlock_quests(quests)
 
         await ctx.send('Synced {} quests.'.format(len(quests)))
+
+
+def _convert_to_serializable(o):
+    if isinstance(o, set):
+        return list(o)
+
+    raise TypeError
 
 
 def unlock_quests(quests: Dict[int, Set[str]]):
