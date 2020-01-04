@@ -71,7 +71,9 @@ class BetterQuestingData:
     def is_normal_quest(self, quest_id: int):
         quest = self.get_quest(quest_id)
         properties = quest['properties:10']
-        return properties['repeattime:3'] == -1 and properties['globalshare:1'] == 0
+        return \
+            ('repeattime:3' not in properties or properties['repeattime:3'] == -1) \
+            and ('globalshare:1' not in properties or properties['globalshare:1'] == 0)
 
 
 class QuestSync(commands.Cog):
