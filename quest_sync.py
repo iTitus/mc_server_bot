@@ -132,6 +132,7 @@ def _convert_to_serializable(o):
 
 def unlock_quests(quests: Dict[int, Set[str]]):
     affected_players = set()
+
     with Client(config.mc_server_host, config.rcon_port) as c:
         c.login(config.rcon_password)
 
@@ -140,7 +141,7 @@ def unlock_quests(quests: Dict[int, Set[str]]):
                 affected_players.add(player)
                 c.run('bq_admin', 'complete', str(quest_id), player)
 
-        for player in players:
+        for player in affected_players:
             c.run('execute', player, '~', '~', '~', 'bq_user', 'refresh')
 
 
