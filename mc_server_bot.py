@@ -18,6 +18,7 @@ extensions: Tuple[str, ...] = (
     'mc_query',
     'mc_rcon',
     'mc_chat_relay',
+    'quest_sync',
     'debug_message_logger'
 )
 

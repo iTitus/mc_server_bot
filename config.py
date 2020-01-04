@@ -33,6 +33,7 @@ class Config:
                webhook_id: int = -1,
                webhook_token: str = None,
                server_dir: str = None,
+               server_world: str = 'world',
                mc_chat_relay_channel: int = -1,
                enable_rcon: bool = False,
                rcon_port: int = -1,
@@ -48,6 +49,7 @@ class Config:
         self.webhook_id: int = webhook_id
         self.webhook_token: str = webhook_token
         self.server_dir: str = server_dir
+        self.server_world: str = server_world
         self.enable_rcon: bool = enable_rcon
         self.rcon_port: int = rcon_port
         self.rcon_password: str = rcon_password

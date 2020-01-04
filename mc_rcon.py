@@ -26,7 +26,8 @@ class Rcon(commands.Cog):
 
 
 def setup(bot: commands.Bot):
-    bot.add_cog(Rcon(bot))
+    if config.enable_rcon:
+        bot.add_cog(Rcon(bot))
 
 
 def teardown(bot: commands.Bot):

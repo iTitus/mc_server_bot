@@ -32,7 +32,8 @@ class Query(commands.Cog):
 
 
 def setup(bot: commands.Bot):
-    bot.add_cog(Query(bot))
+    if config.enable_query:
+        bot.add_cog(Query(bot))
 
 
 def teardown(bot: commands.Bot):
