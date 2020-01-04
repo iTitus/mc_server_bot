@@ -41,6 +41,16 @@ class BetterQuestingData:
     def get_parties(self):
         return self.questing_parties['parties:9'].values()
 
+    def get_quest_database(self):
+        return self.quest_database['questDatabase:9'].values()
+
+    def get_quest(self, quest_id: int):
+        for quest in self.get_quest_database():
+            if quest['questID:3'] == quest_id:
+                return quest
+
+        raise KeyError
+
     def get_name_cache(self):
         return self.name_cache['nameCache:9'].values()
 
@@ -52,11 +62,15 @@ class BetterQuestingData:
             if cache_entry['uuid:8'] == uuid:
                 return cache_entry['name:8']
 
-        raise ValueError
+        raise KeyError
 
     def get_members(self, party: Mapping) -> Tuple[str, ...]:
         uuids = map(lambda m: m['uuid:8'], party['members:9'].values())
         return tuple(map(self.get_name_from_cache, uuids))
+
+    def is_normal_quest(self, quest_id: int):
+        quest = self.get_quest(quest_id)
+        return quest['repeattime:3'] == -1 and quest['globalshare:1'] == 0
 
 
 class QuestSync(commands.Cog):
@@ -78,15 +92,15 @@ class QuestSync(commands.Cog):
 
         for quest_progress in data.get_quest_progress():
             quest_id: int = quest_progress['questID:3']
+            if not data.is_normal_quest(quest_id):
+                continue
+
             completed = tuple(
                 map(
                     data.get_name_from_cache,
                     map(
                         lambda m: m['uuid:8'],
-                        filter(
-                            lambda c: c['timestamp:4'] > 0,
-                            quest_progress['completed:9'].values()
-                        )
+                        quest_progress['completed:9'].values()
                     )
                 )
             )
