@@ -15,7 +15,7 @@ from mcipc.rcon import Client
 from typing.io import TextIO
 
 import util
-from config import config
+from config import Config
 
 log = logging.getLogger(__name__)
 _mc_log_reader_process: Optional[Process] = None
@@ -119,16 +119,16 @@ class McChatRelay(commands.Cog):
     def __should_not_send_to_mc(self, message: discord.Message) -> bool:
         return \
             not message.content \
-            or message.webhook_id == config.webhook_id \
-            or message.channel.id != config.mc_chat_relay_channel
+            or message.webhook_id == Config.webhook_id \
+            or message.channel.id != Config.mc_chat_relay_channel
 
     async def __send_to_mc(self, message: discord.Message):
         if self.__should_not_send_to_mc(message):
             return
 
         try:
-            with Client(config.mc_server_host, config.rcon_port) as rcon:
-                rcon.login(config.rcon_password)
+            with Client(Config.mc_server_host, Config.rcon_port) as rcon:
+                rcon.login(Config.rcon_password)
                 msg_obj: Any = _create_chat_msg_obj(message.author, message.clean_content)
                 msg: str = json.dumps(msg_obj)
                 log.info('Sending RCON tellraw message: {}'.format(msg))
@@ -142,11 +142,11 @@ class McChatRelay(commands.Cog):
 
 
 def setup(bot: commands.Bot):
-    if config.enable_mc_chat_relay and config.enable_rcon:
+    if Config.enable_mc_chat_relay and Config.enable_rcon:
         bot.add_cog(McChatRelay(bot))
         global _mc_log_reader_process
         _mc_log_reader_process = Process(target=_read_log, name='minecraft_log_reader',
-                                         args=(config.server_dir, config.webhook_id, config.webhook_token))
+                                         args=(Config.server_dir, Config.webhook_id, Config.webhook_token))
         _mc_log_reader_process.start()
 
 

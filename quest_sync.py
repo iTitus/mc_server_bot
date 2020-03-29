@@ -7,7 +7,7 @@ from typing import Tuple, Mapping, Dict, Set
 from discord.ext import commands
 from mcipc.rcon import Client
 
-from config import config
+from config import Config
 
 log = logging.getLogger(__name__)
 
@@ -88,7 +88,7 @@ class QuestSync(commands.Cog):
 
         quests: Dict[int, Set[str]] = defaultdict(set)
 
-        data_path = os.path.join(config.server_dir, config.server_world, 'betterquesting')
+        data_path = os.path.join(Config.server_dir, Config.server_world, 'betterquesting')
         data = BetterQuestingData(data_path)
 
         parties = tuple(map(data.get_members, data.get_parties()))
@@ -133,8 +133,8 @@ def _convert_to_serializable(o):
 def unlock_quests(quests: Dict[int, Set[str]]):
     affected_players = set()
 
-    with Client(config.mc_server_host, config.rcon_port) as c:
-        c.login(config.rcon_password)
+    with Client(Config.mc_server_host, Config.rcon_port) as c:
+        c.login(Config.rcon_password)
 
         for quest_id, players in quests.items():
             for player in players:
@@ -146,7 +146,7 @@ def unlock_quests(quests: Dict[int, Set[str]]):
 
 
 def setup(bot: commands.Bot):
-    if config.server_dir and config.enable_rcon:
+    if Config.server_dir and Config.enable_rcon and Config.quest_sync:
         bot.add_cog(QuestSync(bot))
 
 

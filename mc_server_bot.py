@@ -5,7 +5,7 @@ from typing import Tuple
 
 from discord.ext import commands
 
-from config import config
+from config import Config
 
 extensions: Tuple[str, ...] = (
     'config',
@@ -26,12 +26,12 @@ extensions: Tuple[str, ...] = (
 def main():
     logging.basicConfig(level=logging.INFO)
 
-    bot: commands.Bot = commands.Bot(commands.when_mentioned_or(config.command_prefix))
+    bot: commands.Bot = commands.Bot(commands.when_mentioned_or(Config.command_prefix))
 
     for ext in extensions:
         bot.load_extension(ext)
 
-    bot.run(config.token)
+    bot.run(Config.token)
 
 
 if __name__ == '__main__':

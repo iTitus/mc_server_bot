@@ -3,7 +3,7 @@ import logging
 from discord.ext import commands
 from mcipc.rcon import Client
 
-from config import config
+from config import Config
 
 log = logging.getLogger(__name__)
 
@@ -17,8 +17,8 @@ class Rcon(commands.Cog):
     @commands.is_owner()
     async def rcon(self, ctx: commands.Context, *, command: str):
         log.info('RCON: \'{}\''.format(command))
-        with Client(config.mc_server_host, config.rcon_port) as rcon:
-            rcon.login(config.rcon_password)
+        with Client(Config.mc_server_host, Config.rcon_port) as rcon:
+            rcon.login(Config.rcon_password)
             resp: str = rcon.run(command)
             log.info('Response from RCON: \'{}\''.format(resp))
             if resp:
@@ -26,7 +26,7 @@ class Rcon(commands.Cog):
 
 
 def setup(bot: commands.Bot):
-    if config.enable_rcon:
+    if Config.enable_rcon:
         bot.add_cog(Rcon(bot))
 
 
