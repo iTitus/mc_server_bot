@@ -30,7 +30,7 @@ def main():
 
     for ext in extensions:
         bot.load_extension(ext)
-
+    print('load_config:', config.__dict__)
     bot.run(config.token)
 
 

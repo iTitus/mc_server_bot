@@ -62,6 +62,7 @@ class Config:
             with open(_config_file, 'r') as fp:
                 self.__load(**json.load(fp))
             self.save_config()
+        print('load_config:', self.__dict__)
 
     def save_config(self):
         with open(_config_file, 'w') as fp:
