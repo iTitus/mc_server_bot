@@ -3,4 +3,5 @@ __pycache__
 venv
 
 config.json
+config_BCKP.json
 *.iml
