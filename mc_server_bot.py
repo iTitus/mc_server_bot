@@ -8,7 +8,7 @@ from discord.ext import commands
 from config import Config
 
 extensions: Tuple[str, ...] = (
-    'config',
+    'config_cog',
     'util',
     'ext_reloader',
     'error_handler',
