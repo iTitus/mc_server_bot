@@ -10,16 +10,16 @@
 
 from mcipc.rcon import Client
 
-HOST_NAME: str = 'localhost'
+HOST_NAME: str = "localhost"
 PORT: int = 25575
-PASSWORD: str = '12345'
+PASSWORD: str = "12345"
 
 
 def main() -> None:
     with Client(HOST_NAME, PORT) as c:
         c.login(PASSWORD)
-        c.say('Hello from the RCON!')
+        c.say("Hello from the RCON!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -8,18 +8,18 @@ from discord.ext import commands
 from config import Config
 
 extensions: Tuple[str, ...] = (
-    'config_cog',
-    'util',
-    'ext_reloader',
-    'error_handler',
-    'shutdown',
-    'greeter',
-    'ip',
-    'mc_query',
-    'mc_rcon',
-    'mc_chat_relay',
-    'quest_sync',
-    'debug_message_logger'
+    "config_cog",
+    "util",
+    "ext_reloader",
+    "error_handler",
+    "shutdown",
+    "greeter",
+    "ip",
+    "mc_query",
+    "mc_rcon",
+    "mc_chat_relay",
+    "quest_sync",
+    "debug_message_logger",
 )
 
 
@@ -34,5 +34,5 @@ def main():
     bot.run(Config.token)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

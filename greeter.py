@@ -6,13 +6,12 @@ log = logging.getLogger(__name__)
 
 
 class Greeter(commands.Cog):
-
     def __init__(self, bot: commands.Bot):
         self.bot: commands.Bot = bot
 
     @commands.Cog.listener()
     async def on_ready(self):
-        log.info('We have logged in as {}'.format(self.bot.user))
+        log.info("We have logged in as {}".format(self.bot.user))
 
 
 def setup(bot: commands.Bot):
